@@ -6,7 +6,15 @@ spec:
   containers:
     - name: frontend
       image: tejaswinidockerhub/frontend
-
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: catalogue
+spec:
+  containers:
+    - name: catalogue
+      image: tejaswinidockerhub/catalogue
 ---
 apiVersion : v1
 kind : Pod
@@ -20,31 +28,11 @@ spec:
 apiVersion : v1
 kind : Pod
 metadata:
-  name: catalogue
-spec:
-  containers:
-    - name: catalogue
-      image: tejaswinidockerhub/catalogue
-
----
-apiVersion : v1
-kind : pod
-metadata:
   name: cart
 spec:
   containers:
     - name: cart
       image: tejaswinidockerhub/cart
----
-apiVersion : v1
-kind : pod
-metadata:
-  name: shipping
-spec:
-  containers:
-    - name: shipping
-      image: tejaswinidockerhub/shipping
-
 ---
 apiVersion : v1
 kind : Pod
@@ -54,6 +42,15 @@ spec:
   containers:
     - name: payment
       image: tejaswinidockerhub/payment
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: shipping
+spec:
+  containers:
+    - name: shipping
+      image: tejaswinidockerhub/shipping
 ---
 apiVersion : v1
 kind : Pod
