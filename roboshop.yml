@@ -7,3 +7,59 @@ spec:
     - name: frontend
       image: tejaswinidockerhub/frontend
 
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: user
+spec:
+  containers:
+    - name: user
+      image: tejaswinidockerhub/user
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: catalogue
+spec:
+  containers:
+    - name: catalogue
+      image: tejaswinidockerhub/catalogue
+
+---
+apiVersion : v1
+kind : pod
+metadata:
+  name: cart
+spec:
+  containers:
+    - name: cart
+      image: tejaswinidockerhub/cart
+---
+apiVersion : v1
+kind : pod
+metadata:
+  name: shipping
+spec:
+  containers:
+    - name: shipping
+      image: tejaswinidockerhub/shipping
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: payment
+spec:
+  containers:
+    - name: payment
+      image: tejaswinidockerhub/payment
+---
+apiVersion : v1
+kind : Pod
+metadata:
+  name: dispatch
+spec:
+  containers:
+    - name: dispatch
+      image: tejaswinidockerhub/dispatch
+
