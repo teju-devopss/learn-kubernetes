@@ -13,7 +13,7 @@ metadata:
   name: catalogue
 spec:
   initContainers:
-    - name: paramters-pull
+    - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
       imagePullPolicy: Always
       volumeMounts:
