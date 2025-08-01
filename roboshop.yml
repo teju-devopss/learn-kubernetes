@@ -16,12 +16,22 @@ spec:
     - name: paramters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
       imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
       env:
         - name: PARAMS
           value: "dev.roboshop.docdb.endpoint dev.roboshop.docdb.username dev.roboshop.docdb.password"
   containers:
     - name: catalogue
       image: tejaswinidockerhub/catalogue
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+  volumes:
+    - name: parameters
+      emptyDir: { }
 
 ---
 apiVersion : v1
