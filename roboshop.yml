@@ -188,7 +188,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: frontend-tejudevops.online
+    - host: frontend-dev.tejudevops.online
       http:
         paths:
           - pathType: Prefix
