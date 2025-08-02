@@ -87,21 +87,95 @@ kind : Pod
 metadata:
   name: dispatch
   labels:
-    app: dispatch
+    app: dispatch  #the labels are whenever a set of pods communicate with eacheather when we use label the service account will pick those pods automatically
 spec:
   containers:
     - name: dispatch
       image: tejaswinidockerhub/dispatch
 
-
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: frontend
-#spec:
-#  selector:
-#    app: frontend
-#  ports:
-#    - protocol: TCP
-#      port: 80
-#      targetPort: 80
+# below all are service accounts which is used to communicate internally between them
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer # only frontend is exposed to outside world so we had loadbalancer to frontend
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+spec:
+  selector:
+    app: catalogue
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+spec:
+  selector:
+    app: user
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart
+spec:
+  selector:
+    app: cart
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+spec:
+  selector:
+    app: payment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping
+spec:
+  selector:
+    app: shipping
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dispatch
+spec:
+  selector:
+    app: dispatch
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
