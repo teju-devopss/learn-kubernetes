@@ -8,6 +8,7 @@ spec:
   containers:
     - name: frontend
       image: tejaswinidockerhub/frontend
+      imagePullPolicy: Always
 ---
 apiVersion : v1
 kind : Pod
