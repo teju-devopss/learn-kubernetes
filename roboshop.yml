@@ -202,11 +202,4 @@ spec:
                   number: 80
             path: /
 
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: default
-  namespace: default
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/roboshop-catalogue-irsa-role
+
