@@ -169,6 +169,41 @@ spec:
     - name: parameters
       emptyDir: { }
 ---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: shipping-schema-load
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: parameters
+          emptyDir: { }
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/init-container-parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.rds.endpoint,DOCDB_HOST dev.roboshop.rds.username,DB_USER,dev.roboshop.rds.password,DOCDB_PASS"
+      containers:
+        - name: schema-load
+          image: docker.io/tejaswinidockerhub/schema-loader
+          imagePullPolicy: Always
+          env:
+            - name: COMPONENT
+              value: shipping
+            - name: SCHEMA_TYPE
+              value: mongo
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+---
 apiVersion : v1
 kind : Pod
 metadata:
