@@ -118,7 +118,7 @@ spec:
           name: parameters
       env:
         - name: PARAMS
-          value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST,dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_HOST"
+          value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST,dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_PORT"
   containers:
     - name: cart
       image: tejaswinidockerhub/cart
