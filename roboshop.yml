@@ -137,9 +137,26 @@ metadata:
   labels:
     app: payment
 spec:
+  initContainers:
+    - name: parameters-pull
+      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+      env:
+        - name: PARAMS
+          value: "dev.roboshop.payment.CART_HOST = cart dev.roboshop.payment.CART_PORT = 80 dev.roboshop.payment.USER_HOST = user dev.roboshop.payment.USER_PORT = 80 dev.roboshop.payment.AMQP_HOST = rabbitmq-dev.tejudevops.online dev.roboshop.payment.AMQP_USER = roboshop dev.roboshop.payment.AMQP_PASS = roboshop123"
   containers:
     - name: payment
       image: tejaswinidockerhub/payment
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+  volumes:
+    - name: parameters
+      emptyDir: { }
 ---
 apiVersion : v1
 kind : Pod
