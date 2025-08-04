@@ -81,9 +81,26 @@ metadata:
   labels:
     app: user
 spec:
+  initContainers:
+    - name: parameters-pull
+      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+      env:
+        - name: PARAMS
+          value: "dev.roboshop.user.MONGO_URL,MONGO_URL dev.roboshop.user.REDIS_HOST,REDIS_HOST"
   containers:
     - name: user
       image: tejaswinidockerhub/user
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+  volumes:
+    - name: parameters
+      emptyDir: { }
 ---
 apiVersion : v1
 kind : Pod
