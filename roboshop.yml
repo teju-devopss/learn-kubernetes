@@ -148,9 +148,26 @@ metadata:
   labels:
     app: shipping
 spec:
+  initContainers:
+    - name: parameters-pull
+      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+      env:
+        - name: PARAMS
+          value: "dev.roboshop.shipping.CART_ENDPOINT,CART_ENDPOINT dev.roboshop.shipping.DB_HOST,DB_HOST"
   containers:
     - name: shipping
       image: tejaswinidockerhub/shipping
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+  volumes:
+    - name: parameters
+      emptyDir: { }
 ---
 apiVersion : v1
 kind : Pod
