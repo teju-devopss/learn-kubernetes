@@ -200,8 +200,7 @@ spec:
               value: shipping
             - name: SCHEMA_TYPE
               value: mysql
-
-         volumeMounts:
+          volumeMounts:
             - mountPath: /parameters
               name: parameters
 ---
