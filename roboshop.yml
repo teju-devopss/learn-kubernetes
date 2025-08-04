@@ -37,6 +37,38 @@ spec:
   volumes:
     - name: parameters
       emptyDir: { }
+---
+#jobs are nothing but when you
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: catalogue-schema-load
+spec:
+  template:
+    backoffLimit: 4
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: parameters
+          emptyDir: { }
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/init-container-parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.pass,DOCDB_PASS"
+      containers:
+        - name: schema-load
+          image: docker.io/tejaswinidockerhub/schema-loader
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+
+
 
 ---
 apiVersion : v1
@@ -101,7 +133,7 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  type: LoadBalancer # only frontend is exposed to outside world so we had loadbalancer to frontend
+#  type: LoadBalancer # only frontend is exposed to outside world so we had loadbalancer to frontend
   selector:
     app: frontend
   ports:
@@ -201,5 +233,5 @@ spec:
                 port:
                   number: 80
             path: /
-
+---
 
