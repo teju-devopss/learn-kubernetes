@@ -45,9 +45,9 @@ metadata:
   name: catalogue-schema-load
 spec:
   template:
-    backoffLimit: 4
     spec:
       restartPolicy: Never
+      backoffLimit: 4
       volumes:
         - name: parameters
           emptyDir: { }
@@ -60,7 +60,7 @@ spec:
               name: parameters
           env:
             - name: PARAMS
-              value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.pass,DOCDB_PASS"
+              value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.pass,DOCDB_PASS,dev.roboshop.docdb.endpoint,DOCDB_ENDPOINT"
       containers:
         - name: schema-load
           image: docker.io/tejaswinidockerhub/schema-loader
