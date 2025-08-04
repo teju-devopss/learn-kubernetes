@@ -44,10 +44,10 @@ kind: Job
 metadata:
   name: catalogue-schema-load
 spec:
+  backoffLimit: 4
   template:
     spec:
       restartPolicy: Never
-      backoffLimit: 4
       volumes:
         - name: parameters
           emptyDir: { }
