@@ -64,12 +64,15 @@ spec:
       containers:
         - name: schema-load
           image: docker.io/tejaswinidockerhub/schema-loader
+          imagePullPolicy: Always
+          env:
+            - name: COMPONENT
+              value: catalogue
+            - name: SCHEMA_TYPE
+              value: mongo
           volumeMounts:
             - mountPath: /parameters
               name: parameters
-
-
-
 ---
 apiVersion : v1
 kind : Pod
