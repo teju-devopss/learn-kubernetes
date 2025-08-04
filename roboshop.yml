@@ -109,9 +109,26 @@ metadata:
   labels:
     app: cart
 spec:
+  initContainers:
+    - name: parameters-pull
+      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+      env:
+        - name: PARAMS
+          value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST,dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_HOST"
   containers:
     - name: cart
       image: tejaswinidockerhub/cart
+      imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
+  volumes:
+    - name: parameters
+      emptyDir: { }
 ---
 apiVersion : v1
 kind : Pod
