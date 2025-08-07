@@ -238,6 +238,105 @@ spec:
 #  containers:
 #    - name: dispatch
 #      image: tejaswinidockerhub/dispatch
+
+# Service: frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# Service: catalogue
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+spec:
+  selector:
+    app: catalogue
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+# Service: user
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+spec:
+  selector:
+    app: user
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+# Service: cart
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart
+spec:
+  selector:
+    app: cart
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+# Service: payment
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+spec:
+  selector:
+    app: payment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+# Service: shipping
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping
+spec:
+  selector:
+    app: shipping
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+# Service: dispatch
+apiVersion: v1
+kind: Service
+metadata:
+  name: dispatch
+spec:
+  selector:
+    app: dispatch
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+# service accounts
 apiVersion: v1
 kind: ServiceAccount
 metadata:
