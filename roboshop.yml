@@ -228,17 +228,16 @@ spec:
             - mountPath: /parameters
               name: parameters
 ---
-apiVersion : v1
-kind : Pod
-metadata:
-  name: dispatch
-  labels:
-    app: dispatch
-spec:
-  containers:
-    - name: dispatch
-      image: tejaswinidockerhub/dispatch
----
+#apiVersion : v1
+#kind : Pod
+#metadata:
+#  name: dispatch
+#  labels:
+#    app: dispatch
+#spec:
+#  containers:
+#    - name: dispatch
+#      image: tejaswinidockerhub/dispatch
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -286,12 +285,11 @@ metadata:
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-shipping-ssm
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: roboshop-dispatch-sa
-  namespace: default
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-dispatch-ssm
-
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: roboshop-dispatch-sa
+#  namespace: default
+#  annotations:
+#    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-dispatch-ssm
+#
