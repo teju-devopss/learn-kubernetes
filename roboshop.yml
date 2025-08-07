@@ -286,4 +286,12 @@ metadata:
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-shipping-ssm
+---
+piVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-dispatch-sa
+  namespace: default
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-dispatch-ssm
 
