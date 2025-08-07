@@ -393,8 +393,7 @@ metadata:
 #    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-dispatch-ssm
 #
 ---
-Ingress: frontend
-apiVersion: v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend
