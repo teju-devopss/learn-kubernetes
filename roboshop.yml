@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  serviceAccountName: roboshop-frontend-sa
+  serviceAccountName: frontend
   containers:
     - name: frontend
       image: tejaswinidockerhub/frontend
@@ -18,7 +18,7 @@ metadata:
   labels:
     app: catalogue
 spec:
-  serviceAccountName: roboshop-catalogue-sa
+  serviceAccountName: catalogue
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
@@ -48,7 +48,7 @@ spec:
   backoffLimit: 4
   template:
     spec:
-      serviceAccountName: roboshop-catalogue-sa
+      serviceAccountName: catalogue
       restartPolicy: Never
       volumes:
         - name: parameters
@@ -83,7 +83,7 @@ metadata:
   labels:
     app: user
 spec:
-  serviceAccountName: roboshop-user-sa
+  serviceAccountName: user
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
@@ -112,7 +112,7 @@ metadata:
   labels:
     app: cart
 spec:
-  serviceAccountName: roboshop-cart-sa
+  serviceAccountName: cart
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
@@ -141,7 +141,7 @@ metadata:
   labels:
     app: payment
 spec:
-  serviceAccountName: roboshop-payment-sa
+  serviceAccountName: payment
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
@@ -170,7 +170,7 @@ metadata:
   labels:
     app: shipping
 spec:
-  serviceAccountName: roboshop-shipping-sa
+  serviceAccountName: shipping
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
@@ -200,7 +200,7 @@ spec:
   backoffLimit: 4
   template:
     spec:
-      serviceAccountName: roboshop-shipping-sa
+      serviceAccountName: shipping
       restartPolicy: Never
       volumes:
         - name: parameters
@@ -241,7 +241,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-frontend-sa
+  name: frontend
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-frontend-ssm
@@ -249,7 +249,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-catalogue-sa
+  name: catalogue
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-catalogue-ssm
@@ -257,7 +257,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-user-sa
+  name: user
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-user-ssm
@@ -265,7 +265,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-cart-sa
+  name: cart
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-cart-ssm
@@ -273,7 +273,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-payment-sa
+  name: payment
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-payment-ssm
@@ -281,7 +281,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: roboshop-shipping-sa
+  name: shipping
   namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-shipping-ssm
