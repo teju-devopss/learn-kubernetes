@@ -243,6 +243,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-frontend-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-frontend-ssm
 ---
@@ -250,6 +251,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-catalogue-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-catalogue-ssm
 ---
@@ -257,6 +259,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-user-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-user-ssm
 ---
@@ -264,6 +267,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-cart-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-cart-ssm
 ---
@@ -271,6 +275,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-payment-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-payment-ssm
 ---
@@ -278,5 +283,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: roboshop-shipping-sa
+  namespace: default
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-shipping-ssm
+
