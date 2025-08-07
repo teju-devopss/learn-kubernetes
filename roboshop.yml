@@ -21,7 +21,7 @@ spec:
   serviceAccountName: roboshop-catalogue-sa
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
@@ -55,7 +55,7 @@ spec:
           emptyDir: { }
       initContainers:
         - name: parameters-pull
-          image: docker.io/tejaswinidockerhub/init-container-parameters-image
+          image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /parameters
@@ -86,7 +86,7 @@ spec:
   serviceAccountName: roboshop-user-sa
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
@@ -115,7 +115,7 @@ spec:
   serviceAccountName: roboshop-cart-sa
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
@@ -144,7 +144,7 @@ spec:
   serviceAccountName: roboshop-payment-sa
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
@@ -173,7 +173,7 @@ spec:
   serviceAccountName: roboshop-shipping-sa
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/init-container-parameters-image
+      image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
@@ -207,7 +207,7 @@ spec:
           emptyDir: { }
       initContainers:
         - name: parameters-pull
-          image: docker.io/tejaswinidockerhub/init-container-parameters-image
+          image: docker.io/tejaswinidockerhub/init-awscontainer-parameters-image
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /parameters
