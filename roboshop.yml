@@ -5,6 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
+  serviceAccountName: roboshop-frontend-sa
   containers:
     - name: frontend
       image: tejaswinidockerhub/frontend
@@ -17,6 +18,7 @@ metadata:
   labels:
     app: catalogue
 spec:
+  serviceAccountName: roboshop-catalogue-sa
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
@@ -38,7 +40,6 @@ spec:
     - name: parameters
       emptyDir: { }
 ---
-#jobs are nothing but when you
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -47,6 +48,7 @@ spec:
   backoffLimit: 4
   template:
     spec:
+      serviceAccountName: roboshop-catalogue-sa
       restartPolicy: Never
       volumes:
         - name: parameters
@@ -81,6 +83,7 @@ metadata:
   labels:
     app: user
 spec:
+  serviceAccountName: roboshop-user-sa
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
@@ -109,6 +112,7 @@ metadata:
   labels:
     app: cart
 spec:
+  serviceAccountName: roboshop-cart-sa
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
@@ -137,6 +141,7 @@ metadata:
   labels:
     app: payment
 spec:
+  serviceAccountName: roboshop-payment-sa
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
@@ -146,7 +151,7 @@ spec:
           name: parameters
       env:
         - name: PARAMS
-          value: "dev.roboshop.payment.CART_HOST,CART_HOST dev.roboshop.payment.CART_PORT,CART_PORT dev.roboshop.payment.USER_HOST,USER_HOST dev.roboshop.payment.USER_PORT,USER_PORT dev.roboshop.payment.AMQP_HOST,AMQP_HOST dev.roboshop.payment.AMQP_USER,AMQP_USER dev.roboshop.payment.AMQP_PASS, AMQP_PASS"
+          value: "dev.roboshop.payment.CART_HOST,CART_HOST dev.roboshop.payment.CART_PORT,CART_PORT dev.roboshop.payment.USER_HOST,USER_HOST dev.roboshop.payment.USER_PORT,USER_PORT dev.roboshop.payment.AMQP_HOST,AMQP_HOST dev.roboshop.payment.AMQP_USER,AMQP_USER dev.roboshop.payment.AMQP_PASS,AMQP_PASS"
   containers:
     - name: payment
       image: tejaswinidockerhub/payment
@@ -165,6 +170,7 @@ metadata:
   labels:
     app: shipping
 spec:
+  serviceAccountName: roboshop-shipping-sa
   initContainers:
     - name: parameters-pull
       image: docker.io/tejaswinidockerhub/init-container-parameters-image
@@ -194,6 +200,7 @@ spec:
   backoffLimit: 4
   template:
     spec:
+      serviceAccountName: roboshop-shipping-sa
       restartPolicy: Never
       volumes:
         - name: parameters
@@ -226,118 +233,50 @@ kind : Pod
 metadata:
   name: dispatch
   labels:
-    app: dispatch  #the labels are whenever a set of pods communicate with eacheather when we use label the service account will pick those pods automatically
+    app: dispatch
 spec:
   containers:
     - name: dispatch
       image: tejaswinidockerhub/dispatch
-
-# below all are service accounts which is used to communicate internally between them
 ---
 apiVersion: v1
-kind: Service
+kind: ServiceAccount
 metadata:
-  name: frontend
-spec:
-#  type: LoadBalancer # only frontend is exposed to outside world so we had loadbalancer to frontend
-  selector:
-    app: frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: catalogue
-spec:
-  selector:
-    app: catalogue
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: user
-spec:
-  selector:
-    app: user
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: cart
-spec:
-  selector:
-    app: cart
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: payment
-spec:
-  selector:
-    app: payment
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: shipping
-spec:
-  selector:
-    app: shipping
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: dispatch
-spec:
-  selector:
-    app: dispatch
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: frontend
+  name: roboshop-frontend-sa
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: frontend-dev.tejudevops.online
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: frontend-dev.tejudevops.online
-      http:
-        paths:
-          - pathType: Prefix
-            backend:
-              service:
-                name: frontend
-                port:
-                  number: 80
-            path: /
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-frontend-ssm
 ---
-
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-catalogue-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-catalogue-ssm
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-user-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-user-ssm
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-cart-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-cart-ssm
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-payment-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-payment-ssm
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: roboshop-shipping-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-shipping-ssm
