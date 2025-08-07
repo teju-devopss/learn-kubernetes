@@ -392,3 +392,23 @@ metadata:
 #  annotations:
 #    eks.amazonaws.com/role-arn: arn:aws:iam::522814736516:role/dev-roboshop-eks-pod-role-for-dispatch-ssm
 #
+---
+# Ingress: frontend
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: frontend-dev.tejudevops.online
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: frontend-dev.tejudevops.online
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
