@@ -224,9 +224,9 @@ spec:
               value: shipping
             - name: SCHEMA_TYPE
               value: mysql
-          volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+      volumeMounts:
+        - mountPath: /parameters
+          name: parameters
 ---
 #apiVersion : v1
 #kind : Pod
