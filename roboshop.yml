@@ -11,8 +11,8 @@ spec:
       image: tejaswinidockerhub/frontend
       imagePullPolicy: Always
 ---
-apiVersion : v1
-kind : Pod
+apiVersion: v1
+kind: Pod
 metadata:
   name: catalogue
   labels:
