@@ -62,7 +62,7 @@ spec:
               name: parameters
           env:
             - name: PARAMS
-              value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.pass,DOCDB_PASS dev.roboshop.docdb.endpoint,DOCDB_ENDPOINT"
+              value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.password,DOCDB_PASS dev.roboshop.docdb.endpoint,DOCDB_ENDPOINT"
       containers:
         - name: schema-load
           image: docker.io/tejaswinidockerhub/schema-loader
