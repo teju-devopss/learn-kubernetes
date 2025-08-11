@@ -65,7 +65,7 @@ spec:
               value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.password,DOCDB_PASS dev.roboshop.docdb.endpoint,DOCDB_ENDPOINT"
       containers:
         - name: schema-load
-          image: docker.io/tejaswinidockerhub/schema-loader
+          image: docker.io/tejaswinidockerhub/schema-loading
           imagePullPolicy: Always
           env:
             - name: COMPONENT
@@ -217,7 +217,7 @@ spec:
               value: "dev.roboshop.rds.endpoint,DOCDB_HOST dev.roboshop.rds.username,DB_USER dev.roboshop.rds.password,DB_PASS"
       containers:
         - name: schema-load
-          image: docker.io/tejaswinidockerhub/schema-loader
+          image: docker.io/tejaswinidockerhub/schema-loading
           imagePullPolicy: Always
           env:
             - name: COMPONENT
