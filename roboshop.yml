@@ -86,7 +86,7 @@ spec:
   serviceAccountName: user
   initContainers:
     - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/devops-parameters-image
+      image: docker.io/tejaswinidockerhub/parameters-image
       imagePullPolicy: Always
       volumeMounts:
         - mountPath: /parameters
