@@ -76,8 +76,8 @@ spec:
             - mountPath: /parameters
               name: parameters
 ---
-apiVersion : v1
-kind : Pod
+apiVersion: v1
+kind: Pod
 metadata:
   name: user
   labels:
@@ -105,8 +105,8 @@ spec:
     - name: parameters
       emptyDir: { }
 ---
-apiVersion : v1
-kind : Pod
+apiVersion: v1
+kind: Pod
 metadata:
   name: cart
   labels:
@@ -134,8 +134,8 @@ spec:
     - name: parameters
       emptyDir: { }
 ---
-apiVersion : v1
-kind : Pod
+apiVersion: v1
+kind: Pod
 metadata:
   name: payment
   labels:
@@ -163,8 +163,8 @@ spec:
     - name: parameters
       emptyDir: { }
 ---
-apiVersion : v1
-kind : Pod
+apiVersion: v1
+kind: Pod
 metadata:
   name: shipping
   labels:
