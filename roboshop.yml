@@ -214,7 +214,7 @@ spec:
               name: parameters
           env:
             - name: PARAMS
-              value: "dev.roboshop.rds.endpoint,DOCDB_HOST dev.roboshop.rds.username,DB_USER,dev.roboshop.rds.password,DOCDB_PASS"
+              value: "dev.roboshop.rds.endpoint,DOCDB_HOST dev.roboshop.rds.username,DB_USER dev.roboshop.rds.password,DB_PASS"
       containers:
         - name: schema-load
           image: docker.io/tejaswinidockerhub/schema-loader
