@@ -176,18 +176,18 @@ spec:
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: cart
+  name: payment
   labels:
-    app: cart
+    app: payment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cart
+      app: payment
   template:
     metadata:
       labels:
-        app: cart
+        app: payment
     spec:
       serviceAccountName: payment
       initContainers:
