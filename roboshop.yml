@@ -249,8 +249,8 @@ spec:
             httpGet:
               path: /health
               port: 8080
-              failureThreshold: 10
-              periodSeconds: 10
+            failureThreshold: 10
+            periodSeconds: 10
       volumes:
       - name: parameters
         emptyDir: { }
