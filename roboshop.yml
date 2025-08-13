@@ -19,6 +19,13 @@ spec:
         - name: frontend
           image: tejaswinidockerhub/frontend
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "500m"
+            limits:
+              memory: "500Mi"
+              cpu: "750m"
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -51,6 +58,13 @@ spec:
         - name: catalogue
           image: tejaswinidockerhub/catalogue
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           volumeMounts:
           - mountPath: /parameters
             name: parameters
@@ -128,6 +142,13 @@ spec:
         - name: user
           image: tejaswinidockerhub/user
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           volumeMounts:
           - mountPath: /parameters
             name: parameters
@@ -166,6 +187,13 @@ spec:
         - name: cart
           image: tejaswinidockerhub/cart
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "150Mi"
+              cpu: "100m"
           volumeMounts:
           - mountPath: /parameters
             name: parameters
@@ -204,6 +232,13 @@ spec:
         - name: payment
           image: tejaswinidockerhub/payment
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "200m"
+            limits:
+              memory: "250Mi"
+              cpu: "200m"
           volumeMounts:
           - mountPath: /parameters
             name: parameters
@@ -242,6 +277,13 @@ spec:
         - name: shipping
           image: tejaswinidockerhub/shipping
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1000m"
+            limits:
+              memory: "2.5Gi"
+              cpu: "1500m"
           volumeMounts:
           - mountPath: /parameters
             name: parameters
