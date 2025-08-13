@@ -42,8 +42,8 @@ spec:
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+           - mountPath: /parameters
+             name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.catalogue.MONGO_URL,MONGO_URL"
@@ -52,11 +52,11 @@ spec:
           image: tejaswinidockerhub/catalogue
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
       volumes:
-        - name: parameters
-          emptyDir: { }
+      - name: parameters
+        emptyDir: { }
 ---
 apiVersion: batch/v1
 kind: Job
@@ -69,15 +69,15 @@ spec:
       serviceAccountName: catalogue
       restartPolicy: Never
       volumes:
-        - name: parameters
-          emptyDir: {}
+      - name: parameters
+        emptyDir: {}
       initContainers:
         - name: parameters-pull
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.docdb.username,DOCDB_USER dev.roboshop.docdb.password,DOCDB_PASS dev.roboshop.docdb.endpoint,DOCDB_ENDPOINT"
@@ -91,8 +91,9 @@ spec:
             - name: SCHEMA_TYPE
               value: mongo
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
+
 
 ---
 
@@ -118,8 +119,8 @@ spec:
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.user.MONGO_URL,MONGO_URL dev.roboshop.user.REDIS_HOST,REDIS_HOST"
@@ -128,10 +129,11 @@ spec:
           image: tejaswinidockerhub/user
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
       volumes:
         - name: parameters
+          emptyDir: { }
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -155,8 +157,8 @@ spec:
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_PORT"
@@ -165,11 +167,11 @@ spec:
           image: tejaswinidockerhub/cart
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
       volumes:
-        - name: parameters
-          emptyDir: { }
+      - name: parameters
+        emptyDir: { }
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -193,8 +195,8 @@ spec:
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.payment.CART_HOST,CART_HOST dev.roboshop.payment.CART_PORT,CART_PORT dev.roboshop.payment.USER_HOST,USER_HOST dev.roboshop.payment.USER_PORT,USER_PORT dev.roboshop.payment.AMQP_HOST,AMQP_HOST dev.roboshop.payment.AMQP_USER,AMQP_USER dev.roboshop.payment.AMQP_PASS,AMQP_PASS"
@@ -203,11 +205,11 @@ spec:
           image: tejaswinidockerhub/payment
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
       volumes:
-        - name: parameters
-          emptyDir: { }
+      - name: parameters
+        emptyDir: { }
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -231,8 +233,8 @@ spec:
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.shipping.CART_ENDPOINT,CART_ENDPOINT dev.roboshop.shipping.DB_HOST,DB_HOST"
@@ -241,8 +243,8 @@ spec:
           image: tejaswinidockerhub/shipping
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           readinessProbe:
             httpGet:
               path: /health
@@ -250,8 +252,8 @@ spec:
               failureThreshold: 10
               periodSeconds: 10
       volumes:
-        - name: parameters
-          emptyDir: { }
+      - name: parameters
+        emptyDir: { }
 ---
 apiVersion: batch/v1
 kind: Job
@@ -264,15 +266,15 @@ spec:
       serviceAccountName: shipping
       restartPolicy: Never
       volumes:
-        - name: parameters
-          emptyDir: {}
+      - name: parameters
+        emptyDir: {}
       initContainers:
         - name: parameters-pull
           image: docker.io/tejaswinidockerhub/parameters-image
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
           env:
             - name: PARAMS
               value: "dev.roboshop.rds.endpoint,DB_HOST dev.roboshop.rds.username,DB_USER dev.roboshop.rds.password,DB_PASS"
@@ -286,8 +288,8 @@ spec:
             - name: SCHEMA_TYPE
               value: mysql
           volumeMounts:
-            - mountPath: /parameters
-              name: parameters
+          - mountPath: /parameters
+            name: parameters
 ---
 #apiVersion : v1
 #kind : Pod
