@@ -1,44 +1,62 @@
-apiVersion : v1
-kind : Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: frontend
   labels:
     app: frontend
 spec:
-  serviceAccountName: frontend
-  containers:
-    - name: frontend
-      image: tejaswinidockerhub/frontend
-      imagePullPolicy: Always
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      serviceAccountName: frontend
+      containers:
+        - name: frontend
+          image: tejaswinidockerhub/frontend
+          imagePullPolicy: Always
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: catalogue
   labels:
     app: catalogue
 spec:
-  serviceAccountName: catalogue
-  initContainers:
-    - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/parameters-image
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-      env:
-        - name: PARAMS
-          value: "dev.roboshop.catalogue.MONGO_URL,MONGO_URL"
-  containers:
-    - name: catalogue
-      image: tejaswinidockerhub/catalogue
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-  volumes:
-    - name: parameters
-      emptyDir: { }
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalogue
+  template:
+    metadata:
+      labels:
+        app: catalogue
+    spec:
+      serviceAccountName: catalogue
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.catalogue.MONGO_URL,MONGO_URL"
+      containers:
+        - name: catalogue
+          image: tejaswinidockerhub/catalogue
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+      volumes:
+        - name: parameters
+          emptyDir: { }
 ---
 apiVersion: batch/v1
 kind: Job
@@ -77,121 +95,157 @@ spec:
               name: parameters
 
 ---
-apiVersion: v1
-kind: Pod
+
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: user
   labels:
     app: user
 spec:
-  serviceAccountName: user
-  initContainers:
-    - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/parameters-image
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-      env:
-        - name: PARAMS
-          value: "dev.roboshop.user.MONGO_URL,MONGO_URL dev.roboshop.user.REDIS_HOST,REDIS_HOST"
-  containers:
-    - name: user
-      image: tejaswinidockerhub/user
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-  volumes:
-    - name: parameters
-      emptyDir: { }
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      serviceAccountName: user
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.user.MONGO_URL,MONGO_URL dev.roboshop.user.REDIS_HOST,REDIS_HOST"
+      containers:
+        - name: user
+          image: tejaswinidockerhub/user
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+      volumes:
+        - name: parameters
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: cart
   labels:
     app: cart
 spec:
-  serviceAccountName: cart
-  initContainers:
-    - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/parameters-image
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-      env:
-        - name: PARAMS
-          value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_PORT"
-  containers:
-    - name: cart
-      image: tejaswinidockerhub/cart
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-  volumes:
-    - name: parameters
-      emptyDir: { }
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart
+  template:
+    metadata:
+      labels:
+        app: cart
+    spec:
+      serviceAccountName: cart
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.cart.REDIS_HOST,REDIS_HOST dev.roboshop.cart.CATALOGUE_HOST,CATALOGUE_HOST dev.roboshop.cart.CATALOGUE_PORT,CATALOGUE_PORT"
+      containers:
+        - name: cart
+          image: tejaswinidockerhub/cart
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+      volumes:
+        - name: parameters
+          emptyDir: { }
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
-  name: payment
+  name: cart
   labels:
-    app: payment
+    app: cart
 spec:
-  serviceAccountName: payment
-  initContainers:
-    - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/parameters-image
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-      env:
-        - name: PARAMS
-          value: "dev.roboshop.payment.CART_HOST,CART_HOST dev.roboshop.payment.CART_PORT,CART_PORT dev.roboshop.payment.USER_HOST,USER_HOST dev.roboshop.payment.USER_PORT,USER_PORT dev.roboshop.payment.AMQP_HOST,AMQP_HOST dev.roboshop.payment.AMQP_USER,AMQP_USER dev.roboshop.payment.AMQP_PASS,AMQP_PASS"
-  containers:
-    - name: payment
-      image: tejaswinidockerhub/payment
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-  volumes:
-    - name: parameters
-      emptyDir: { }
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart
+  template:
+    metadata:
+      labels:
+        app: cart
+    spec:
+      serviceAccountName: payment
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.payment.CART_HOST,CART_HOST dev.roboshop.payment.CART_PORT,CART_PORT dev.roboshop.payment.USER_HOST,USER_HOST dev.roboshop.payment.USER_PORT,USER_PORT dev.roboshop.payment.AMQP_HOST,AMQP_HOST dev.roboshop.payment.AMQP_USER,AMQP_USER dev.roboshop.payment.AMQP_PASS,AMQP_PASS"
+      containers:
+        - name: payment
+          image: tejaswinidockerhub/payment
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+      volumes:
+        - name: parameters
+          emptyDir: { }
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
   name: shipping
   labels:
     app: shipping
 spec:
-  serviceAccountName: shipping
-  initContainers:
-    - name: parameters-pull
-      image: docker.io/tejaswinidockerhub/parameters-image
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-      env:
-        - name: PARAMS
-          value: "dev.roboshop.shipping.CART_ENDPOINT,CART_ENDPOINT dev.roboshop.shipping.DB_HOST,DB_HOST"
-  containers:
-    - name: shipping
-      image: tejaswinidockerhub/shipping
-      imagePullPolicy: Always
-      volumeMounts:
-        - mountPath: /parameters
-          name: parameters
-  volumes:
-    - name: parameters
-      emptyDir: { }
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping
+  template:
+    metadata:
+      labels:
+        app: shipping
+    spec:
+      serviceAccountName: shipping
+      initContainers:
+        - name: parameters-pull
+          image: docker.io/tejaswinidockerhub/parameters-image
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+          env:
+            - name: PARAMS
+              value: "dev.roboshop.shipping.CART_ENDPOINT,CART_ENDPOINT dev.roboshop.shipping.DB_HOST,DB_HOST"
+      containers:
+        - name: shipping
+          image: tejaswinidockerhub/shipping
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /parameters
+              name: parameters
+      volumes:
+        - name: parameters
+          emptyDir: { }
 ---
 apiVersion: batch/v1
 kind: Job
